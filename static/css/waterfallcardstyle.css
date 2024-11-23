@@ -1,0 +1,109 @@
+
+
+
+.feeds-container {
+    position: relative;
+    transition: width 0.5s, left 0.5s;
+    /* 添加 left 属性的过渡效果 */
+    margin: 0 auto;
+    max-width: 1230px;
+    column-count: 3;
+    column-gap: 10px;
+
+}
+
+.card {
+    break-inside: avoid;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    display: block;
+    transition: filter 0.3s ease;
+    cursor: pointer;
+}
+
+/* 鼠标悬浮时变暗 */
+.card img:hover {
+    filter: brightness(70%);
+}
+
+.footer {
+    padding: 12px;
+}
+
+.title {
+    margin-bottom: 8px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 140%;
+    color: #333;
+    /* 字体为黑体 */
+    
+        /* 设置字体 */
+}
+
+.author-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 20px;
+    color: rgba(51, 51, 51, 0.8);
+    font-size: 12px;
+    transition: color 1s;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 12px;
+}
+
+.card .author-avatar {
+    margin-right: 6px;
+    width: 30px;
+    /* 增加宽度 */
+    height: 30px;
+    /* 增加高度 */
+    border-radius: 50%;
+    /* 将边框半径设置为50%，使其成为圆形 */
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    /* 增加边框厚度并调整颜色 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加阴影效果 */
+    object-fit: cover;
+    /* 确保图片覆盖整个容器 */
+    flex-shrink: 0;
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.like-wrapper {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.like-wrapper .count {
+    margin-left: 2px;
+}

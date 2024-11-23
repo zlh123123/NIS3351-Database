@@ -1,0 +1,348 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>笔记详情</title>
+        <link rel="stylesheet" href="{% static 'css/main.css'%}" />
+        <link rel="stylesheet" href="{% static 'css/pushbutton.css'%}" />
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/window.css' %}" />
+        <!-- 引入 Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <script
+            type="text/javascript"
+            src="{% static 'js/jquery-3.7.1.min.js' %}"
+        ></script>
+        <script src="{% static 'js/main.js' %}"></script>
+    </head>
+
+    <body>
+        <div class="note-detail-mask">
+            <div class="note-container">
+                <div class="media-container">
+                    <div class="carousel">
+                        <div class="carousel-item">
+                            <img src="{{ post.image }}" alt="图片" />
+                        </div>
+                    </div>
+                </div>
+                <div class="interaction-container">
+                    <div class="author-container">
+                        <div class="author-me">
+                            <div class="info">
+                                <a href="/my/{{ author.id }}/">
+                                    <img
+                                        class="avatar-item"
+                                        src="{{ author.image }}"
+                                        alt="头像"
+                                    />
+                                </a>
+                                <span class="name">{{ author.nickname }}</span>
+                            </div>
+                        </div>
+                        <div class="note-scroller">
+                            <div class="note-content">
+                                <div class="title">{{ post.title }}</div>
+                                <div class="desc">
+                                    <span>{{ post.description }} <br /></span>
+                                    {% for tag in post.tag %}
+                                    <a class="tag tag-search">#{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                                <div class="bottom-container">
+                                    <span class="date">{{ post.time }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a
+                        href="javascript:;"
+                        class="invite-button"
+                        onclick="sendmyinvitation()"
+                        >发送邀请</a
+                    >
+                    <button class="disable-button">
+                        <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                            <path
+                                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"
+                            ></path>
+                        </svg>
+                    </button>
+                    <div class="tooltip" id="delete-tooltip">
+                        点击后，该找搭子需求将被挂起，对其他用户不可见。
+                    </div>
+                    <div class="tooltip" id="recover-tooltip">
+                        点击后，该找搭子需求将被恢复正常可见状态。
+                    </div>
+                    <button class="list-button" onclick="viewApplyList()">
+                        查看申请列表
+                    </button>
+                    <button class="recover-button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-arrow-repeat"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"
+                            ></path>
+                            <path
+                                fill-rule="evenodd"
+                                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+                            ></path>
+                        </svg>
+                        恢复需求
+                    </button>
+                    <button class="result-button trigger" id="result-button">
+                        <span class="result-text">查看结果</span>
+                        <span class="result-svg">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="50"
+                                height="20"
+                                viewBox="0 0 38 15"
+                                fill="none"
+                            >
+                                <path
+                                    fill="white"
+                                    d="M10 7.519l-.939-.344h0l.939.344zm14.386-1.205l-.981-.192.981.192zm1.276 5.509l.537.843.148-.094.107-.139-.792-.611zm4.819-4.304l-.385-.923h0l.385.923zm7.227.707a1 1 0 0 0 0-1.414L31.343.448a1 1 0 0 0-1.414 0 1 1 0 0 0 0 1.414l5.657 5.657-5.657 5.657a1 1 0 0 0 1.414 1.414l6.364-6.364zM1 7.519l.554.833.029-.019.094-.061.361-.23 1.277-.77c1.054-.609 2.397-1.32 3.629-1.787.617-.234 1.17-.392 1.623-.455.477-.066.707-.008.788.034.025.013.031.021.039.034a.56.56 0 0 1 .058.235c.029.327-.047.906-.39 1.842l1.878.689c.383-1.044.571-1.949.505-2.705-.072-.815-.45-1.493-1.16-1.865-.627-.329-1.358-.332-1.993-.244-.659.092-1.367.305-2.056.566-1.381.523-2.833 1.297-3.921 1.925l-1.341.808-.385.245-.104.068-.028.018c-.011.007-.011.007.543.84zm8.061-.344c-.198.54-.328 1.038-.36 1.484-.032.441.024.94.325 1.364.319.45.786.64 1.21.697.403.054.824-.001 1.21-.09.775-.179 1.694-.566 2.633-1.014l3.023-1.554c2.115-1.122 4.107-2.168 5.476-2.524.329-.086.573-.117.742-.115s.195.038.161.014c-.15-.105.085-.139-.076.685l1.963.384c.192-.98.152-2.083-.74-2.707-.405-.283-.868-.37-1.28-.376s-.849.069-1.274.179c-1.65.43-3.888 1.621-5.909 2.693l-2.948 1.517c-.92.439-1.673.743-2.221.87-.276.064-.429.065-.492.057-.043-.006.066.003.155.127.07.099.024.131.038-.063.014-.187.078-.49.243-.94l-1.878-.689zm14.343-1.053c-.361 1.844-.474 3.185-.413 4.161.059.95.294 1.72.811 2.215.567.544 1.242.546 1.664.459a2.34 2.34 0 0 0 .502-.167l.15-.076.049-.028.018-.011c.013-.008.013-.008-.524-.852l-.536-.844.019-.012c-.038.018-.064.027-.084.032-.037.008.053-.013.125.056.021.02-.151-.135-.198-.895-.046-.734.034-1.887.38-3.652l-1.963-.384zm2.257 5.701l.791.611.024-.031.08-.101.311-.377 1.093-1.213c.922-.954 2.005-1.894 2.904-2.27l-.771-1.846c-1.31.547-2.637 1.758-3.572 2.725l-1.184 1.314-.341.414-.093.117-.025.032c-.01.013-.01.013.781.624zm5.204-3.381c.989-.413 1.791-.42 2.697-.307.871.108 2.083.385 3.437.385v-2c-1.197 0-2.041-.226-3.19-.369-1.114-.139-2.297-.146-3.715.447l.771 1.846z"
+                                ></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="close-cricle" onclick="closeNoteDetail()">
+                <div class="close close-mask-white">
+                    <span class="close-icon">✖️</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-wrapper"></div>
+        <!-- Modal -->
+        <div class="modal-wrapper">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger" href="#">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="good-job">
+                        <img src="{% static 'svg/right.svg' %}" alt="" class="result-image" width="100px" height="100px">
+                        <h1 id="result"></h1>
+                        <h2 id="describe"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const isMyself = {{ is_myself|yesno:"true,false" }};
+            const is_disabled = {{ is_disabled|yesno:"true,false" }};
+            console.log({{ apply_result }});
+            console.log(isMyself);
+            if (isMyself) {
+                document.querySelector(".invite-button").style.display = "none";
+                if (is_disabled) {
+                    document.querySelector(".disable-button").style.display = "none";
+                    document.querySelector(".list-button").style.display = "none";
+                } else {
+                    document.querySelector(".recover-button").style.display = "none";
+                }
+            } else {
+                document.querySelector(".disable-button").style.display = "none";
+                document.querySelector(".list-button").style.display = "none";
+                document.querySelector(".recover-button").style.display = "none";
+            }
+
+            // 添加鼠标悬停事件监听器
+            const disableButton = document.querySelector('.disable-button');
+            const delete_tooltip = document.getElementById('delete-tooltip');
+            const recover_tooltip = document.getElementById('recover-tooltip');
+            const recoverButton = document.querySelector('.recover-button');
+            const inviteButton = document.querySelector('.invite-button');
+            const resultButton = document.getElementById('result-button');
+
+            if ({{ apply_result }} == 0) {
+                inviteButton.textContent = "邀请已发送";
+                // 方法 2：禁用鼠标事件
+                inviteButton.style.pointerEvents = 'none';
+
+                // 可选：更改按钮样式，使其看起来被禁用
+                inviteButton.style.opacity = '0.6';
+                inviteButton.style.cursor = 'not-allowed';
+            } else if ({{ apply_result }} == 1 ) {
+                inviteButton.style.display = 'none';
+                resultButton.style.display = 'flex';
+                document.querySelector('.result-image').src="{% static 'svg/right.svg' %}";
+                document.getElementById('result').textContent = "搭子配对成功！";
+                document.getElementById('describe').textContent = "发起人联系方式为：{{ owner_contact }}，请与对方进一步联系以获取更多信息";
+            } else if ({{ apply_result }} == 2) {
+                inviteButton.style.display = 'none';
+                resultButton.style.display = 'flex';
+                document.querySelector('.result-image').src="{% static 'svg/wrong.svg' %}";
+                document.getElementById('result').textContent = "您的申请被拒绝了！";
+                document.getElementById('describe').textContent = "别伤心，请尝试对其他需求发起申请！";
+            }
+
+            disableButton.addEventListener('mouseover', function () {
+                const rect = disableButton.getBoundingClientRect();
+                delete_tooltip.classList.add('show');
+            });
+
+            disableButton.addEventListener('mouseout', function () {
+                delete_tooltip.classList.remove('show');
+            });
+
+            disableButton.addEventListener('click', function () {
+                const noticeId = "{{ post.id }}"; // 替换为实际的notice_id
+                fetch("/api/disable_notice", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ notice_id: noticeId }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success === 0) {
+                            alert("挂起成功");
+                        } else if (data.success === -1) {
+                            alert("未登录");
+                        } else if (data.success === -2) {
+                            alert("无权限删除");
+                        } else {
+                            alert("删除失败");
+                        }
+                        location.reload(); // 刷新页面
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            });
+
+            recoverButton.addEventListener('mouseover', function () {
+                const rect = disableButton.getBoundingClientRect();
+                recover_tooltip.classList.add('show');
+            });
+
+            recoverButton.addEventListener('mouseout', function () {
+                recover_tooltip.classList.remove('show');
+            });
+
+            recoverButton.addEventListener('click', function () {
+                const noticeId = "{{ post.id }}"; // 替换为实际的notice_id
+                fetch("/api/recover_notice", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ notice_id: noticeId }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success === 0) {
+                            alert("恢复成功");
+                        } else if (data.success === -1) {
+                            alert("未登录");
+                        } else if (data.success === -2) {
+                            alert("无权限恢复");
+                        } else {
+                            alert("恢复失败");
+                        }
+                        location.reload(); // 刷新页面
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            });
+
+    
+            const imgElement = document.querySelector('.carousel-item img');
+
+            imgElement.onload = function () {
+                const width = imgElement.naturalWidth;
+                const height = imgElement.naturalHeight;
+            
+                // 根据宽高比添加类
+                if (width >= height) {
+                    imgElement.classList.add('landscape'); // 添加横向类
+                } else {
+                    imgElement.classList.add('portrait'); // 添加竖向类
+                }
+            
+                // 处理过大或过小的图片
+                const containerAspectRatio = imgElement.parentElement.offsetWidth / imgElement.parentElement.offsetHeight;
+                const imageAspectRatio = width / height;
+            
+                if (imageAspectRatio > containerAspectRatio) {
+                    imgElement.classList.add('landscape');
+                } else {
+                    imgElement.classList.add('portrait');
+                }
+            };
+
+
+});
+
+
+        
+
+        function viewApplyList() {
+              // 更新浏览器地址栏
+            history.pushState(null, null, `/applylist/{{ post.id }}/`);
+
+             //刷新页面
+            location.reload();
+        }
+
+        function closeNoteDetail() {
+            history.back();
+        }
+        window.addEventListener("popstate", function (event) {
+            location.reload(); // 刷新页面
+        });
+        function sendmyinvitation() {
+            const noticeId = "{{ post.id }}"; // 替换为实际的notice_id
+
+            fetch("/api/request_notice", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ notice_id: noticeId }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success === 0) {
+                        alert("请求成功");
+                    } else if (data.success === -1) {
+                        alert("用户不存在");
+                    } else if (data.success === -2) {
+                        alert("需求不存在");
+                    } else if (data.success === -5) {
+                        alert("不能给自己发送邀请");
+                    } else {
+                        alert("请求失败");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+
+    </script>
+</html>
