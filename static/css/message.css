@@ -1,0 +1,323 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.background {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50px; /* Set equal width and height */
+    height: 50px; /* Set equal width and height */
+    padding: 0; /* Remove padding */
+    background-color: #0056b3; /* Set background to a darker blue */
+    color: #ffffff; /* Set the arrow color to white */
+    text-decoration: none;
+    border-radius: 50%; /* Make the button circular */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 24px; /* Adjust the font size */
+    line-height: 50px; /* Center the text vertically */
+    text-align: center; /* Center the text horizontally */
+    font-weight: bold; /* Make the arrow thicker */
+}
+
+.back-button:hover {
+    background-color: #004080 !important; /* Slightly darker blue on hover */
+    transform: scale(1.05);
+}
+
+/* 按钮样式 */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 按钮之间的间距 */
+}
+
+.button {
+    background-color: #4ac1f7;
+    color: #fff;
+    border: none; /* 去掉边框 */
+    padding: 10px 20px; /* 上下和左右的内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 去掉下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 字体大小 */
+    border-radius: 8px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+    transition: background-color 0.3s; /* 动画效果 */
+}
+
+.button:hover {
+    background-color: #007bff; /* 悬停时的背景色 */
+}
+
+/* 悬停添加箭头图标 */
+.back-button-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0; /* Adjust padding as needed */
+}
+
+.niceButton5 {
+    display: inline-block;
+    border-radius: 20px;
+    background-color: #fbfdfe;
+    border: none;
+    color: #5b72ee;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 11px;
+    width: 50px;
+    height: 50px;
+    line-height: 33px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    vertical-align: middle;
+    position: relative; /* Positioning the button absolutely */
+    top: 0; /* Adjust the top position */
+    left: 0; /* Adjust the left position */
+    z-index: 99;
+}
+.niceButton5 span {
+cursor: pointer;
+display: inline-block;
+position: relative;
+transition: 0.5s;
+}
+.niceButton5 span::after {
+content: ">";
+position: absolute;
+opacity: 0;
+top: 20%;
+right: 20%;
+transition: 0.5s;
+}
+.niceButton5:hover span {
+padding-right: 30px;
+}
+.niceButton5:hover span::after {
+opacity: 1;
+right: 0;
+}
+
+.yes-button {
+    background-color: rgba(0, 255, 42, 0.64);  /* 按钮背景色 */
+    color: white;                /* 按钮文字颜色 */
+    border: none;                /* 去掉边框 */
+    border-radius: 8px;         /* 圆角半径 */
+    padding: 10px 20px;         /* 内边距 */
+    cursor: pointer;             /* 鼠标悬停时变成手型 */
+    transition: background-color 0.3s;  /* 背景颜色过渡效果 */
+    font-size: 20px;
+}
+
+.yes-button:hover {
+    background-color: rgb(5, 97, 44);  /* 鼠标悬停时的背景颜色 */
+}
+
+.no-button {
+    background-color: rgba(255, 60, 0, 0.66);  /* 按钮背景色 */
+    color: white;                /* 按钮文字颜色 */
+    border: none;                /* 去掉边框 */
+    border-radius: 8px;         /* 圆角半径 */
+    padding: 10px 20px;         /* 内边距 */
+    cursor: pointer;             /* 鼠标悬停时变成手型 */
+    transition: background-color 0.3s;  /* 背景颜色过渡效果 */
+    font-size: 20px;
+}
+
+.no-button:hover {
+    background-color: rgb(110, 35, 13);  /* 鼠标悬停时的背景颜色 */
+}
+
+
+/* 按钮样式 */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 按钮之间的间距 */
+}
+
+.button {
+    background-color: #4ac1f7;
+    color: #fff;
+    border: none; /* 去掉边框 */
+    padding: 10px 20px; /* 上下和左右的内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 去掉下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 字体大小 */
+    border-radius: 8px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+    transition: background-color 0.3s; /* 动画效果 */
+}
+
+.button:hover {
+    background-color: #007bff; /* 悬停时的背景色 */
+}
+
+.message-container {
+    width: 40rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    animation: fadeIn 1s ease-in-out;
+    min-height: 500px;
+}
+
+.message-item {
+    display: flex;
+    flex-direction: row;
+    padding-top: 24px;
+    border-bottom: 1px solid #e0e0e0;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+.none-message-item {
+    display: flex;
+    flex-direction: row;
+    padding: 40%; /* Increased padding */
+    border-bottom: 1px solid #e0e0e0;
+    animation: slideIn 0.5s ease-in-out;
+    font-size: 18px; /* Increased font size */
+    margin: 20px 0; /* Added margin */
+}
+
+.user-avatar {
+    margin-right: 24px;
+    flex-shrink: 0;
+}
+
+.avatar-item {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.avatar-item:hover {
+    transform: scale(1.1);
+}
+
+.main {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 12px;
+}
+
+.info {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.username {
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.interaction-hint {
+    font-size: 12px;
+    color: rgba(51, 51, 51, 0.6);
+}
+
+.interaction-content {
+    display: flex;
+    font-size: 14px;
+    color: #333;
+    line-height: 140%;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.msg-count {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 13px;
+    color: #fff;
+    background-color: red;
+    text-align: center;
+    border-radius: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 0, 150, 0.1), rgba(0, 204, 255, 0.1));
+    z-index: -1;
+    animation: gradientMove 5s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+

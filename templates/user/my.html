@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <link rel="stylesheet" href="{% static 'css/my.css'%}">
+{#    <link rel="stylesheet" href="{% static 'css/message.css'%}">#}
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+    
+    <script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
+    <script type="text/javascript" src={% static "js/mypublished.js" %}></script>
+    
+</head>
+
+<body>
+
+    <div class="user-page">
+
+        <div class="user">
+            <div class="back-button-container">
+                <button class="niceButton5" onclick="goBackAndRefresh()">&times;</button>
+            </div>
+            <div class="user-info">
+                <div class="avatar">
+                    <div class="avatar-wrapper">
+                        <img src="{{ user_avatar }}"
+                            class="user-image" alt="用户头像">
+                    </div>
+                </div>
+                <div class="info-part">
+                    <div class="info">
+                        <div class="basic-info">
+                            <div class="user-basic">
+                                <div class="user-nickname">
+                                    <div class="user-name">{{ user_nickname }}</div>
+                                </div>
+                                <div class="user-content">
+                                    <span class="user-redId">用户ID：{{ user_id }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-desc">
+                            {{ user_introduction }}
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="reds-sticky-box user-page-sticky">
+            <div class="reds-sticky">
+                <div class="reds-tabs-list">
+                    <div class="reds-tab-item active" id="tab-published" onclick="selectTab('published')">
+                        <span>我发布的</span>
+                    </div>
+                    <div class="reds-tab-item" id="tab-replied" onclick="selectTab('replied')"><span>我申请的</span></div>
+                    <div class="reds-tab-item" id="tab-info" onclick="selectTab('info')"><span>修改我的个人信息</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="feeds-tab-container" id="feeds-tab-container">
+            
+        </div>
+    </div>
+
+    
+    {% if messages %}
+    <script>
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+    </script>
+    {% endif %}
+
+<script>
+    function selectTab(tab) {
+        // 移除所有选项的 active 类
+        document.querySelectorAll('.reds-tab-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // 为选中的选项添加 active 类
+        document.getElementById(`tab-${tab}`).classList.add('active');
+
+        // 根据选中的选项更新内容
+        const container = document.getElementById('feeds-tab-container');
+        container.innerHTML = ''; // 清空内容
+
+        let url = '';
+        if (tab === 'published') {
+            url = '/my/published/';
+        } else if (tab === 'replied') {
+            url = '/my/replied/';
+        } else if (tab === 'info') {
+            url = '/my/info/';
+        }
+
+        // 使用 fetch API 加载 HTML 内容
+        if (url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    container.innerHTML = data;
+                    executeScripts(container);
+                })
+                .catch(error => console.error('Error loading content:', error));
+        }
+    }
+
+        // 手动执行加载的 HTML 内容中的脚本
+    function executeScripts(element) {
+    const scripts = element.querySelectorAll('script');
+    scripts.forEach(script => {
+        if (script.src) {
+            const newScript = document.createElement('script');
+            newScript.src = script.src;
+            newScript.onload = () => {
+                console.log(`Script loaded: ${script.src}`);
+                if (script.src.includes('/static/js/mychangeinfo.js')) {
+                    initializeChangeInfo();
+                }
+                else if (script.src.includes('/static/js/mypublished.js')) {
+                    initializePublished();
+                }
+                else if (script.src.includes('/static/js/myreplied.js')) {
+                    initializeReplied();
+                }
+            };
+            document.head.appendChild(newScript);
+        } else {
+            const newScript = document.createElement('script');
+            newScript.textContent = script.textContent;
+            document.head.appendChild(newScript).parentNode.removeChild(newScript);
+            console.log('Inline script executed');
+        }
+    });
+}
+
+    // 初始化默认选项
+    document.addEventListener('DOMContentLoaded', function () {
+        // 如果需要在 JavaScript 中进一步处理 is_myself 参数，可以使用以下代码
+        const isMyself = {{ is_myself|yesno:"true,false" }};
+        console.log('isMyself:', isMyself);
+        if (!isMyself) {
+            console.log('is not myself');
+            document.body.style.alignItems = 'center';
+            document.querySelector('.reds-sticky-box').classList.add('hidden');
+            document.querySelector('.feeds-tab-container').classList.add('hidden');
+        }
+        selectTab('published');
+    });
+    function goBackAndRefresh() {
+        window.history.back();
+        setTimeout(function() {
+            window.location.reload();
+        }, 100); // Adjust the delay as needed
+    }
+</script>
+</body>
+
+</html>

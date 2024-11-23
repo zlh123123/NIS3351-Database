@@ -1,0 +1,83 @@
+.feeds-page {
+    flex: 1;
+    
+    padding-top: 72px;
+    position: relative;
+
+    left: 130px;
+    
+    /* 隐藏滚动条 */
+    
+    
+}
+
+.channel-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.channel-scroll-container {
+    backdrop-filter: blur(20px);
+    background-color: transparent;
+    width: calc(100vw - 24px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    user-select: none;
+    -webkit-user-select: none;
+    align-items: center;
+    font-size: 16px;
+    color: rgba(51, 51, 51, 0.8);
+    height: 40px;
+    white-space: nowrap;
+    height: 72px;
+    left: 100px;
+}
+
+.content-container::-webkit-scrollbar {
+    display: none;
+}
+
+.content-container {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    color: rgba(51, 51, 51, 0.8);
+}
+
+.active {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 999px;
+    color: #333;
+}
+
+.channel {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+
+}
+
+#channel-recommend:hover, 
+#channel-emotion:hover, 
+#channel-food:hover, 
+#channel-games:hover, 
+#channel-sports:hover, 
+#channel-study:hover, 
+#channel-travel:hover {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 999px;
+    color: #333;
+}
+
